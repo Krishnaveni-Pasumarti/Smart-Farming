@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crop Recommendation</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+  <style>
+    body {
+      background-image: url("../static/images/farm_background.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      color: white;
+    }
+    h2{
+        color: #18a737;
+    }
+    .container {
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 30px;
+      border-radius: 10px;
+      max-width: 700px;
+    }
+    .form-label {
+      font-weight: bold;
+    }
+    .suggestions {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      max-height: 200px;
+      overflow-y: auto;
+      position: absolute;
+      background-color: black;
+      z-index: 1000;
+    }
+    .suggestion-item {
+      padding: 10px;
+      cursor: pointer;
+    }
+    .suggestion-item:hover {
+      background-color: #f0f0f0;
+      color: black;
+    }
+    header {
+    background-color: #0b2c16;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+  }
+
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-brand">🌱 SmartFarm</div>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/yield">Yield Prediction</a></li>
+        <li><a href="/fertilizer">Fertilizer Suggestion</a></li>
+        <li><a href="/leaf-disease">Disease Detection</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="container mt-5">
+    <h2 class="text-center mb-4">🌾 Crop Recommendation System</h2>
+    <form method="POST">
+      <div class="mb-3">
+        <label for="nitrogen" class="form-label">Nitrogen (%)</label>
+        <input type="number" class="form-control" id="nitrogen" name="nitrogen" step="0.1" required />
+      </div>
+      <div class="mb-3">
+        <label for="phosphorus" class="form-label">Phosphorus (%)</label>
+        <input type="number" class="form-control" id="phosphorus" name="phosphorus" step="0.1" required />
+      </div>
+      <div class="mb-3">
+        <label for="potassium" class="form-label">Potassium (%)</label>
+        <input type="number" class="form-control" id="potassium" name="potassium" step="0.1" required />
+      </div>
+      <div class="mb-3">
+        <label for="rainfall" class="form-label">Rainfall (mm)</label>
+        <input type="number" class="form-control" id="rainfall" name="rainfall" step="0.1" required />
+      </div>
+      <div class="mb-3">
+        <label for="temperature" class="form-label">Temperature (°C)</label>
+        <input type="number" class="form-control" id="temperature" name="temperature" step="0.1" required />
+      </div>
+      <div class="mb-3">
+        <label for="humidity" class="form-label">Humidity (%)</label>
+        <input type="number" class="form-control" id="humidity" name="humidity" step="0.1" required />
+      </div>
+      <div class="mb-3">
+        <label for="ph" class="form-label">Soil pH(1-14)</label>
+        <input type="number" class="form-control" id="ph" name="ph" step="0.1" required />
+      </div>
+
+      <!-- Future: Auto-complete city feature -->
+      <!-- 
+      <div class="mb-3 position-relative">
+        <label for="city" class="form-label">City</label>
+        <input type="text" class="form-control" id="city" name="city" autocomplete="off" required oninput="fetchCitySuggestions()" />
+        <div id="suggestions" class="suggestions"></div>
+      </div>
+      -->
+
+      <button type="submit" class="btn btn-primary w-100">Predict Crop</button>
+      <button type="button" class="btn btn-secondary w-100 mt-3" onclick="window.location.href='/'">Go Back</button>
+    </form>
+
+    {% if predicted_crop %}
+      <div class="alert alert-success mt-4" role="alert">
+        🌱 Predicted Crop: <strong>{{ predicted_crop }}</strong>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Optional JS for future feature -->
+  <!--
+  <script>
+    function fetchCitySuggestions() {
+      const query = document.getElementById('city').value;
+      if (query.length < 2) {
+        document.getElementById('suggestions').innerHTML = '';
+        return;
+      }
+      fetch(`/get-city-suggestions?query=${query}`)
+        .then((response) => response.json())
+        .then((data) => {
+          const suggestionsContainer = document.getElementById('suggestions');
+          suggestionsContainer.innerHTML = '';
+          data.forEach((city) => {
+            const suggestionItem = document.createElement('div');
+            suggestionItem.classList.add('suggestion-item');
+            suggestionItem.textContent = `${city.name}, ${city.country}`;
+            suggestionItem.onclick = () => {
+              document.getElementById('city').value = city.name;
+              suggestionsContainer.innerHTML = '';
+            };
+            suggestionsContainer.appendChild(suggestionItem);
+          });
+        })
+        .catch((error) => console.error('Error fetching city suggestions:', error));
+    }
+  </script>
+  -->
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Crop Yield Prediction</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: url("../static/images/Yield.webp") no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .glass-container {
+      background: rgba(0, 0, 0, 0.75);
+      padding: 40px 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      margin-top: 80px;
+    }
+
+    h2 {
+      font-weight: bold;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #00ffcc;
+    }
+
+    .form-label {
+      font-weight: 500;
+    }
+
+    .btn-primary {
+      background-color: #00b894;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #019875;
+    }
+
+    .btn-secondary {
+      border: none;
+      background-color: #007bff;
+    }
+
+    .alert-success {
+      background-color: rgba(40, 167, 69, 0.9);
+      border: none;
+      color: white;
+      font-size: 18px;
+    }
+    header {
+    background-color: #0b2c16;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+  }
+
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-brand">🌱 SmartFarm</div>
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/recommendation">Crop Recommendation</a></li>
+        <li><a href="/fertilizer">Fertilizer Suggestion</a></li>
+        <li><a href="/leaf-disease">Disease Detection</a></li>
+      </ul>
+    </nav>
+  </header>
+  <div class="container">
+    <div class="glass-container">
+      <h2>🌾 Crop Yield Prediction</h2>
+      <form method="POST" class="mt-3">
+
+        <!-- Crop Year -->
+        <div class="mb-3">
+          <label for="year" class="form-label">Crop Year</label>
+          <input type="number" class="form-control" id="year" name="year" required>
+        </div>
+
+        <!-- Season -->
+        <div class="mb-3">
+          <label for="season" class="form-label">Season</label>
+          <select name="season" id="season" class="form-select">
+            <option value="Rainy">Rainy</option>
+            <option value="Winter">Winter</option>
+            <option value="Summer">Summer</option>
+            <option value="Whole Year">Whole Year</option>
+          </select>
+        </div>
+
+        <!-- Crop -->
+        <div class="mb-3">
+            <label for="crop" class="form-label">Crop</label>
+            <input type="text" class="form-control" id="crop" name="crop" placeholder="e.g. Rice, Maize, Papaya" required>
+          </div>
+
+        <!-- Area -->
+        <div class="mb-4">
+          <label for="area" class="form-label">Area (in hectares)</label>
+          <input type="number" class="form-control" id="area" name="area" step="any" required>
+        </div>
+
+        <!-- Predict Button -->
+        <button type="submit" class="btn btn-primary w-100">Predict Yield</button>
+
+        <!-- Go Back Button -->
+        <button type="button" class="btn btn-secondary w-100 mt-3" onclick="window.location.href='/'">
+          Go Back to Homepage
+        </button>
+      </form>
+
+      <!-- Display Prediction -->
+      {% if production %}
+      <div class="alert alert-success mt-4" role="alert">
+        <h4 class="alert-heading">📊 Prediction Results</h4>
+        <hr />
+        <p><strong>Total Production:</strong> {{ production }} units</p>
+        <p><strong>Yield:</strong> {{ yield_prediction }} units/ha</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>

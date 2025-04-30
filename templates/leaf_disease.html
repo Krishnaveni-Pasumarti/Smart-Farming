@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaf Disease Detection</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background-image: url('../static/images/s4.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #e8f5e9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            background-color: rgba(20, 50, 20, 0.8);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h2 {
+            margin: 0;
+            color: #c8e6c9;
+        }
+
+        nav a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .glass-form {
+            background: rgba(34, 87, 34, 0.7);
+            backdrop-filter: blur(8px);
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+        }
+
+        input[type="file"], input[type="submit"], .back-btn {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        input[type="file"] {
+            background-color: #f1faee;
+            color: #2e7d32 ;
+        }
+
+        input[type="submit"] {
+            background-color: #2fc91b;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .back-btn {
+            background-color: #1fe97a;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .result {
+            margin-top: 30px;
+            background: rgba(38, 77, 38, 0.8);
+            padding: 25px;
+            border-radius: 12px;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .result img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        a.reupload {
+            display: inline-block;
+            margin-top: 15px;
+            color: #c8e6c9;
+            text-decoration: underline;
+        }
+        
+       h1{
+            color: #eb290f;
+        }
+        /* Header Styling */
+        header {
+    background-color: #0b2c16;
+    color: white;
+    padding: 0rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-brand {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+  }
+
+  nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+  }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-brand">🌱 SmartFarm</div>
+        <nav>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/recommendation">Crop Recommendation</a></li>
+            <li><a href="/yield">Yield Prediction</a></li>
+            <li><a href="/fertilizer">Fertilizer Suggestion</a></li>
+          </ul>
+        </nav>
+      </header>
+    <!-- <nav>
+        <h2>🌱 SmartFarm</h2>
+        <div>
+            <a href="/">Home</a>
+            <a href="/recommendation">Crop Recommendation</a>
+            <a href="/yield">Yield Prediction</a>
+            <a href="/fertilizer">Fertilizer Suggestion</a>
+        </div>
+    </nav> -->
+
+    <div class="container">
+        <h1>🌿 Leaf Disease Detection</h1>
+
+        <form class="glass-form" action="/leaf-disease" method="post" enctype="multipart/form-data">
+            <input type="file" name="file" accept="image/*" required>
+            <input type="submit" value="Upload Image">
+            <button type="button" class="back-btn" onclick="window.location.href='/'">Go Back</button>
+        </form>
+
+        {% if predicted_disease %}
+        <div class="result">
+            <h2>🔍 Detection Result</h2>
+            <img src="data:image/jpeg;base64,{{ image }}" alt="Uploaded Image" />
+            <p><strong>Predicted Disease:</strong> {{ predicted_disease }}</p>
+            <a href="/leaf-disease" class="reupload">Upload another image</a>
+        </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
